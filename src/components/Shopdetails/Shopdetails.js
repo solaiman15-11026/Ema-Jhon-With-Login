@@ -14,7 +14,7 @@ const Shopdetails = (props) => {
                 <p><small>seller: {seller}</small></p>
                 <p><small>ratings: {ratings}</small> star</p>
             </div>
-            <button onClick={() => props.addCart(props.product)}>
+            <button onClick={() => props.addCart(props.product)} className="ttt">
                 <p>add to cart</p>
                 <FontAwesomeIcon icon={faShoppingCart}></FontAwesomeIcon>
 
