@@ -18,7 +18,6 @@ function App() {
         <Route path="/" element={<Shop></Shop>}>Shop</Route>
         <Route path="/shop" element={<Shop></Shop>}>Shop</Route>
         <Route path="/order" element={<Order></Order>}></Route>
-        <Route path="/cart" element={<Cart></Cart>}></Route>
         <Route path="/about" element={
           <RequireAuth><About></About></RequireAuth>
         }></Route>
