@@ -1,11 +1,11 @@
 import React from 'react';
 
-const About = () => {
+const Invorti = () => {
     return (
         <div>
-            <h1>This is about</h1>
+            <h2>hi</h2>
         </div>
     );
 };
 
-export default About;
+export default Invorti;
