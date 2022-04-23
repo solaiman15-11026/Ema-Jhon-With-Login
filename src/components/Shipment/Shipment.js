@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
-
+import auth from '../../Firebase.init';
 
 const Shipment = () => {
 
-
+    const [user] = useAuthState(auth)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmpassword] = useState('')
@@ -14,7 +14,7 @@ const Shipment = () => {
 
     const navigate = useNavigate()
 
-    const handleEmail = e => {
+    const handleName = e => {
         setEmail(e.target.value)
     }
 
@@ -45,7 +45,9 @@ const Shipment = () => {
                     <div className="input-group">
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="text"><b>Name:</b>  </label> <br />
-                            <input onBlur={handleEmail} type="text" placeholder='' required /> <br /> <br />
+                            <input onBlur={handleName} type="text" placeholder='' required /> <br /> <br />
+                            <label htmlFor="email"><b>Email:</b>  </label> <br />
+                            <input value={user?.email} readOnly type="email" placeholder='' required /> <br /> <br />
                             <label htmlFor="text"><b>Address:</b>  </label> <br />
                             <input onBlur={handlePassword} type="text" placeholder='' required /> <br /> <br />
                             <label htmlFor="number"><b>Number:</b>  </label> <br />
