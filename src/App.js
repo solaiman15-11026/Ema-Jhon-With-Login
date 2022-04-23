@@ -2,7 +2,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import About from './components/About/About';
-import Cart from './components/Cart/Cart';
+import Shipment from './components/Shipment/Shipment';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Order from './components/Order/Order';
@@ -18,9 +18,17 @@ function App() {
         <Route path="/" element={<Shop></Shop>}>Shop</Route>
         <Route path="/shop" element={<Shop></Shop>}>Shop</Route>
         <Route path="/order" element={<Order></Order>}></Route>
+
+        <Route path="/shipment" element={
+          <RequireAuth>
+            <Shipment></Shipment>
+          </RequireAuth>
+        }></Route>
+
         <Route path="/about" element={
           <RequireAuth><About></About></RequireAuth>
         }></Route>
+
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
       </Routes>
