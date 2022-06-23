@@ -1,0 +1,35 @@
+.From-container {
+    width: 600px;
+    border-radius: 8px;
+    border: 1px solid silver;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.font-tittle {
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+    color: rgb(25, 85, 30);
+}
+
+input {
+    width: 415px;
+    height: 40px;
+    border: 1px solid silver;
+    border-radius: 8px;
+}
+
+.rrrr {
+    background-color: rgba(35, 167, 35, 0.836);
+    color: aliceblue;
+}
+
+.rrrr:hover {
+    background-color: royalblue;
+}
+
+.tt {
+    color: blue;
+}
