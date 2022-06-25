@@ -9,16 +9,20 @@ const Usecart = () => {
         const storeCart = getCart();
         const savecart = [];
         const keys = Object.keys(storeCart);
-
+        console.log(keys)
         fetch('http://localhost:5000/productByKeys', {
             method: 'POST',
-            headers: { 'content-type': 'application/json' },
+            headers: {
+                'content-type': 'application/json'
+            },
             body: JSON.stringify(keys)
+
         })
             .then(res => res.json())
-            .then(shop => {
+            .then(products => {
+                console.log(products)
                 for (const id in storeCart) {
-                    const addProduct = shop.find(pro => pro._id === id);
+                    const addProduct = products.find(pro => pro._id === id);
                     if (addProduct) {
                         const quantity = storeCart[id]
                         addProduct.quantity = quantity;
