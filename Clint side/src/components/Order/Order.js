@@ -12,9 +12,9 @@ const Order = () => {
     const navigate = useNavigate();
 
     const remove = (product) => {
-        const rest = cart.filter(po => po.id !== product.id)
+        const rest = cart.filter(po => po._id !== product._id)
         setCart(rest);
-        removeFromDb(product.id)
+        removeFromDb(product._id)
 
     }
 
@@ -26,7 +26,7 @@ const Order = () => {
                 {
                     cart.map(ca => <Review
                         ca={ca}
-                        key={ca.id}
+                        key={ca._id}
                         remove={remove}
                     ></Review>)
                 }

@@ -5,7 +5,7 @@ const Usecart = () => {
     const [cart, setCart] = useState([])
     const [shop, setShop] = useState([])
     useEffect(() => {
-        fetch('products.json')
+        fetch('http://localhost:5000/product')
             .then(response => response.json())
             .then(data => setShop(data))
     }, [])
@@ -14,7 +14,7 @@ const Usecart = () => {
         const storeCart = getCart();
         const savecart = [];
         for (const id in storeCart) {
-            const addProduct = shop.find(pro => pro.id === id);
+            const addProduct = shop.find(pro => pro._id === id);
             if (addProduct) {
                 const quantity = storeCart[id]
                 addProduct.quantity = quantity;
