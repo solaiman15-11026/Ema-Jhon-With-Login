@@ -11,7 +11,7 @@ const Shop = () => {
     const [shop, setShop] = Usecart();
     const [pagecount, setPagecount] = useState(0);
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(10)
+    const [size, setSize] = useState(5)
 
     useEffect(() => {
         fetch(`http://localhost:5000/product?page=${page}&size=${size}`)
