@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Cart from '../Cart/Cart';
-import { addToDb, getCart } from '../../utilities/fakedb'
+import { addToDb } from '../../utilities/fakedb'
 import Shopdetails from '../Shopdetails/Shopdetails';
 import './Shop.css'
 import { Link } from 'react-router-dom';
+import Usecart from '../../Hook/Usecart';
 
 const Shop = () => {
 
-    const [shop, setShop] = useState([])
+    const [shop, setShop] = Usecart();
     const [pagecount, setPagecount] = useState(0);
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(10)
@@ -16,7 +17,7 @@ const Shop = () => {
         fetch(`http://localhost:5000/product?page=${page}&size=${size}`)
             .then(response => response.json())
             .then(data => setShop(data))
-    }, [])
+    }, [page, size])
 
 
     useEffect(() => {
@@ -28,28 +29,6 @@ const Shop = () => {
                 setPagecount(pages);
             })
     }, [])
-
-
-
-
-
-
-
-
-    //local stroge useeffect--------------------------------
-    useEffect(() => {
-        const storeCart = getCart();
-        const saveCart = []
-        for (const id in storeCart) {
-            const added = shop.find(shoping => shoping._id === id);
-            if (added) {
-                const quantity = storeCart[id];
-                added.quantity = quantity;
-                saveCart.push(added)
-            }
-        }
-        setCart(saveCart)
-    }, [shop])
 
 
 
