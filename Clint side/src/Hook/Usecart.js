@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getCart } from '../utilities/fakedb';
 
+
+
 const Usecart = () => {
 
     const [cart, setCart] = useState([])
@@ -20,7 +22,6 @@ const Usecart = () => {
         })
             .then(res => res.json())
             .then(products => {
-                console.log(products)
                 for (const id in storeCart) {
                     const addProduct = products.find(pro => pro._id === id);
                     if (addProduct) {
@@ -31,9 +32,7 @@ const Usecart = () => {
                 }
 
                 setCart(savecart)
-
             })
-
     }, [])
 
     return [cart, setCart]
