@@ -1,105 +1,90 @@
 import React, { useEffect, useState } from 'react';
-import Cart from '../Cart/Cart';
-import { addToDb } from '../../utilities/fakedb'
-import Shopdetails from '../Shopdetails/Shopdetails';
-import './Shop.css'
 import { Link } from 'react-router-dom';
-import Usecart from '../../Hook/Usecart';
+import useCart from '../../hooks/useCart';
+import { addToDb } from '../../utilities/fakedb';
+import Cart from '../Cart/Cart';
+import Product from '../Product/Product';
+import './Shop.css';
 
 const Shop = () => {
-
-    const [shop, setShop] = Usecart();
-    const [pagecount, setPagecount] = useState(0);
+    
+    const [cart, setCart] = useCart();
+    const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(5)
+    const [size, setSize] = useState(10);
+    const [products, setProducts] = useState([]);
 
-    useEffect(() => {
+    useEffect( () =>{
         fetch(`http://localhost:5000/product?page=${page}&size=${size}`)
-            .then(response => response.json())
-            .then(data => setShop(data))
-    }, [page, size])
+        .then(res => res.json())
+        .then(data => setProducts(data));
+    }, [page, size]);
 
-
-    useEffect(() => {
+    useEffect( () =>{
         fetch('http://localhost:5000/productCount')
-            .then(res => res.json())
-            .then(data => {
-                const count = data.count;
-                const pages = Math.ceil(count / 10)
-                setPagecount(pages);
-            })
+        .then(res => res.json())
+        .then(data =>{
+            const count = data.count;
+            const pages = Math.ceil(count/10);
+            setPageCount(pages);
+        })
     }, [])
 
+    
 
-
-
-    //add to cart buttom--------------------------------------
-    const [cart, setCart] = useState([])
-    const addCart = (product) => {
+    const handleAddToCart = (selectedProduct) =>{
+        console.log(selectedProduct);
         let newCart = [];
-        const selet = cart.find(pro => pro._id === product._id);
-        if (!selet) {
-            product.quantity = 1
-            newCart = [...cart, product]
-        } else {
-            const rest = cart.filter(pro => pro._id !== product._id)
-            selet.quantity = selet.quantity + 1;
-            newCart = [...rest, selet]
+        const exists = cart.find(product => product._id === selectedProduct._id);
+        if(!exists){
+            selectedProduct.quantity = 1;
+            newCart = [...cart, selectedProduct];
         }
+        else{
+            const rest = cart.filter(product => product._id !== selectedProduct._id);
+            exists.quantity = exists.quantity + 1;
+            newCart = [...rest, exists];
+        }
+        
         setCart(newCart);
-        addToDb(product._id)
+        addToDb(selectedProduct._id);
     }
 
-
-
     return (
-        <div className='container'>
-
-            <div className="product-container">
-
+        <div className='shop-container'>
+            <div className="products-container">
                 {
-                    shop.map(product => <Shopdetails
-                        product={product}
+                    products.map(product=><Product 
                         key={product._id}
-                        addCart={addCart}
-                    ></Shopdetails>)
+                        product={product}
+                        handleAddToCart={handleAddToCart}
+                        ></Product>)
                 }
-
-
-
-
                 <div className='pagination'>
                     {
-                        [...Array(pagecount).keys()]
-                            .map(number => <button
-                                className={page === number ? 'selected' : ''}
-                                onClick={() => setPage(number)}
-
-                            >{number}</button>)
+                        [...Array(pageCount).keys()]
+                        .map(number => <button
+                            className={page=== number ? 'selected': ''}
+                            onClick={() => setPage(number)}
+                        >{number + 1}</button>)
                     }
-                    <select onChange={e => setSize(e.target.value)} >
+                    
+                    <select onChange={e => setSize(e.target.value)}>
                         <option value="5">5</option>
-                        <option value="10">10</option>
+                        <option value="10" selected>10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                     </select>
                 </div>
-
-
-
-
             </div>
-
             <div className="cart-container">
-
-                <Cart
-                    cart={cart} >
-                    <Link to="/order">
-                        <button>Review order</button>
+                <Cart cart={cart}>
+                    <Link to="/orders">
+                        <button>Review Order </button>
                     </Link>
                 </Cart>
             </div>
-        </div >
+        </div>
     );
 };
 

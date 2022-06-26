@@ -3,33 +3,32 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../Firebase.init';
-import logo from '../../images/Logo.svg'
-import './Header.css'
+import logo from '../../images/Logo.svg';
+import './Header.css';
 
 const Header = () => {
-
     const [user] = useAuthState(auth);
 
-    const handleSignout = () => {
+    const handleSignOut = () => {
         signOut(auth);
     }
 
     return (
-        <nav className='papa'>
+        <nav className='header'>
             <img src={logo} alt="" />
-            <div className='pp'>
+            <div>
                 <Link to="/shop">Shop</Link>
-                <Link to="/order">Order</Link>
-                <Link to="/cart">Cart</Link>
-                {
-                    user ? <button onClick={handleSignout}>Sign out</button> :
-                        <Link to="/login">Login</Link>
-
-                }
+                <Link to="/orders">Orders</Link>
+                <Link to="/inventory">Inventory</Link>
                 <Link to="/about">About</Link>
+                {
+                    user ?
+                        <button onClick={handleSignOut}>Sign out</button>
+                        :
+                        <Link to="/login">Login</Link>}
+
             </div>
         </nav>
-
     );
 };
 

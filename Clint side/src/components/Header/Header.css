@@ -1,22 +1,19 @@
-.papa{
-    background-color: rgba(28, 43, 53, 1);
+.header{
     height: 80px;
+    background-color: #1C2B35;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-left: 140px;
-}
-
-.papa{
     padding-right: 140px;
 }
-a{
-    color: white;
-    text-decoration: none;
-    padding-left: 30px;
-    font-size: 17px;
-}
 
-a:hover{
-    color: blueviolet;
+.header a{
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 17px;
+    margin-left: 36px;
+}
+.header a:hover{
+    color: orange;
 }

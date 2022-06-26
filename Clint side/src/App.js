@@ -5,10 +5,10 @@ import About from './components/About/About';
 import Shipment from './components/Shipment/Shipment';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
-import Order from './components/Order/Order';
+import Orders from './components/Orders/Orders';
 import Shop from './components/Shop/Shop';
 import SignUp from './components/SignUp/SignUp';
-import RequireAuth from './RequireAuth/RequireAuth';
+import RequireAuth from '../src/components/RequireAuth/RequireAuth';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Shop></Shop>}>Shop</Route>
         <Route path="/shop" element={<Shop></Shop>}>Shop</Route>
-        <Route path="/order" element={<Order></Order>}></Route>
+        <Route path="/order" element={<Orders></Orders>}></Route>
 
         <Route path="/shipment" element={
           <RequireAuth>

@@ -1,68 +1,71 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './SignUp.css'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import auth from '../../Firebase.init'
-
+import auth from '../../Firebase.init';
 
 const SignUp = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmpassword, setConfirmpassword] = useState('')
-    const [error, setError] = useState('')
+    const [createUserWithEmailAndPassword, user] = useCreateUserWithEmailAndPassword(auth)
 
-    const [createUserWithEmailAndPassword, user] = useCreateUserWithEmailAndPassword(auth);
-    const navigate = useNavigate()
-
-    const handleEmail = e => {
-        setEmail(e.target.value)
+    const handleEmailBlur = event => {
+        setEmail(event.target.value);
     }
 
-    const handlePassword = e => {
-        setPassword(e.target.value)
+    const handlePasswordBlur = event => {
+        setPassword(event.target.value);
     }
 
-    const handleConfirmpassword = e => {
-        setConfirmpassword(e.target.value)
+    const handleConfirmPasswordBlur = event => {
+        setConfirmPassword(event.target.value);
     }
 
     if (user) {
-        navigate('/shop')
+        navigate('/shop');
     }
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        if (password !== confirmpassword) {
-            setError('Password not match')
+    const handleCreateUser = event => {
+        event.preventDefault();
+        if (password !== confirmPassword) {
+            setError('Your two passwords did not match');
             return;
         }
-        createUserWithEmailAndPassword(email, password)
+        if (password.length < 6) {
+            setError('Password must be 6 characters or longer');
+            return;
+        }
+
+        createUserWithEmailAndPassword(email, password);
     }
 
     return (
-        <div>
-            <div className='From-container'>
-                <div>
-                    <h2 className='font-tittle'> Sign Up</h2>
+        <div className='form-container'>
+            <div>
+                <h2 className='form-title'>Sign Up</h2>
+                <form onSubmit={handleCreateUser}>
                     <div className="input-group">
-                        <form onSubmit={handleSubmit}>
-                            <label htmlFor="email"><b>Email:</b>  </label> <br />
-                            <input onBlur={handleEmail} type="email" placeholder='' required /> <br /> <br />
-                            <label htmlFor="password"><b>Password:</b>  </label> <br />
-                            <input onBlur={handlePassword} type="password" placeholder='' required /> <br /> <br />
-                            <label htmlFor="Confirm password"><b>Confirm Password:</b>  </label> <br />
-                            <input onBlur={handleConfirmpassword} type="password" placeholder='' required />
-                            <br /> <br />
-                            <p>{error}</p>
-                            <input className='rrrr' type="submit" value="Sign Up" />
-                        </form>
-                        <p>
-                            Already have an account? <Link className='tt' to="/login">Login</Link>
-                        </p>
+                        <label htmlFor="email">Email</label>
+                        <input onBlur={handleEmailBlur} type="email" name="email" id="" required />
                     </div>
-                </div>
-            </div >
+                    <div className="input-group">
+                        <label htmlFor="password">Password</label>
+                        <input onBlur={handlePasswordBlur} type="password" name="password" id="" required />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="confirm-password">Confirm Password</label>
+                        <input onBlur={handleConfirmPasswordBlur} type="password" name="confirm-password" id="" />
+                    </div>
+                    <p style={{ color: 'red' }}>{error}</p>
+                    <input className='form-submit' type="submit" value="Sign Up" required />
+                </form>
+                <p>
+                    Already Have an account? <Link className='form-link' to="/login">Login</Link>
+                </p>
+            </div>
         </div>
     );
 };
